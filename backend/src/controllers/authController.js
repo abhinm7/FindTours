@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken';
 export const loginAdmin = (req, res) => {
   const { email, password } = req.body;
 
-  // Check against our .env variables
+  // Check against .env variables
   if (
     email === process.env.ADMIN_EMAIL &&
     password === process.env.ADMIN_PASSWORD
@@ -19,7 +19,7 @@ export const loginAdmin = (req, res) => {
     );
 
     res.json({
-      message: "Login successful, booboo!",
+      message: "Login successful",
       token,
     });
 
