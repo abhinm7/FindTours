@@ -24,10 +24,15 @@ const tourSchema = new mongoose.Schema(
       type: Date,
       required: [true, 'A tour must have an end date'],
     },
-    imageURL: {
-      type: String,
-      required: false,
-      trim: true,
+    image: {
+      url: {
+        type: String,
+        required: false,
+      },
+      public_id: {
+        type: String,
+        required: false,
+      },
     },
   },
   {

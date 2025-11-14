@@ -33,7 +33,6 @@ export const createTour = async (req, res) => {
     url: null,
     public_id: null,
   };
-
   // Check if a file was uploaded by multer-storage-cloudinary
   if (req.file) {
     // Populate the image object with Cloudinary data
