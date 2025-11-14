@@ -8,6 +8,4 @@ router.get('/', getTours);
 // GET single tour by ID
 router.get('/:id', getTourById);
 
-
-
 export default router;

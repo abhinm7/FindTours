@@ -3,7 +3,8 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 
 import connectDB from './config/db.js';
-import tourRoutes from './routes/tours.js'
+import publicRoutes from './routes/tours.js'
+import adminRoutes from './routes/admin.js'
 
 // Load env vars
 dotenv.config();
@@ -23,7 +24,8 @@ app.get('/', (req, res) => {
 });
 
 //routes
-app.use('/api/tours', tourRoutes);
+app.use('/api/tours', publicRoutes);
+app.use('/api/admin', adminRoutes);
 
 
 app.listen(PORT, () => {
