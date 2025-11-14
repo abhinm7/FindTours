@@ -14,7 +14,6 @@ export default function TourCard({ tour }: TourCardProps) {
     minimumFractionDigits: 0,
   }).format(tour.price);
 
-  // formatted date range
   const startDate = new Date(tour.startDate);
   const endDate = new Date(tour.endDate);
 
@@ -23,22 +22,29 @@ export default function TourCard({ tour }: TourCardProps) {
     day: 'numeric',
   });
 
-  const dateRange = `${formattedStartDate} - ${endDate.toLocaleDateString('en-IN', {
-    month: 'short',
-    day: 'numeric',
-    year: 'numeric',
-  })}`;
+  const dateRange = `${formattedStartDate} - ${endDate.toLocaleDateString(
+    'en-IN',
+    {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric',
+    }
+  )}`;
 
   return (
-
-    <Card className="overflow-hidden p-0">
-      <div className="relative w-full h-48">
+    <Card
+      className="
+        overflow-hidden p-0 rounded w-full max-w-xs mx-auto
+        transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg
+      "
+    >
+      <div className="relative w-full h-40">
         {tour.image?.url ? (
           <Image
             src={tour.image.url}
             alt={tour.title}
             fill
-            style={{ objectFit: 'cover' }}
+            className="object-cover"
           />
         ) : (
           <div className="w-full h-full bg-gray-200 flex items-center justify-center">
@@ -47,18 +53,18 @@ export default function TourCard({ tour }: TourCardProps) {
         )}
       </div>
 
-      <div className="p-4">
-        <h2 className="text-xl font-bold mb-1">{tour.title}</h2>
-        <p className="text-sm text-muted-foreground mb-2">{tour.destination}</p>
-        
-        <div className="flex items-center gap-2 text-sm text-muted-foreground">
-          <CalendarDays className="w-4 h-4" />
+      <div className="p-3">
+        <h2 className="text-lg font-semibold mb-1">{tour.title}</h2>
+        <p className="text-xs text-muted-foreground mb-2">{tour.destination}</p>
+
+        <div className="flex items-center gap-2 text-xs text-muted-foreground">
+          <CalendarDays className="w-3.5 h-3.5" />
           <span>{dateRange}</span>
         </div>
       </div>
 
-      <div className="p-4 pt-0 flex justify-between items-center">
-        <span className="text-lg font-semibold">{formattedPrice}</span>
+      <div className="p-3 pt-0 flex justify-between items-center">
+        <span className="text-base font-semibold">{formattedPrice}</span>
       </div>
     </Card>
   );
