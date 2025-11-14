@@ -5,7 +5,7 @@ import { v2 as cloudinary } from 'cloudinary';
 export const getTours = async (req, res) => {
   try {
     const tours = await Tour.find();
-    res.status(200).json(tours);
+    res.status(200).json({ success: true, data: tours });
   } catch (error) {
     res.status(500).json({success: false, message: error.message });
   }
