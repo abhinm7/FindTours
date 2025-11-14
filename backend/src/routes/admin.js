@@ -4,16 +4,15 @@ import {
     updateTour,
     deleteTour,
 } from '../controllers/tourController.js'
+import upload from "../config/cloudinary.js"
 
 const router = express.Router();
 
-// --- ADMIN ONLY ROUTES ---
-
 // POST (create) a new tour
-router.post('/tours', createTour);
+router.post('/tours', upload.single('image'), createTour);
 
 // PUT (update) a tour by ID
-router.put('/tours/:id', updateTour);
+router.put('/tours/:id', upload.single('image'), updateTour);
 
 // DELETE a tour by ID
 router.delete('/tours/:id', deleteTour);
