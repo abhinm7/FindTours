@@ -24,8 +24,8 @@ app.get('/', (req, res) => {
 });
 
 //routes
-app.use('/api/tours', publicRoutes);
-app.use('/api/admin', adminRoutes);
+app.use('/api/tours', publicRoutes); //route for public tour fetching
+app.use('/api/admin', adminRoutes);  //route for admin CRUD operation
 
 
 app.listen(PORT, () => {

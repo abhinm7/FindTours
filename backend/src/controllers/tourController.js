@@ -51,12 +51,12 @@ export const updateTour = async (req, res) => {
   try {
     const updatedTour = await Tour.findByIdAndUpdate(
       req.params.id,
-      req.body, 
+      req.body,
       { new: true, runValidators: true }
     );
 
     if (!updatedTour) {
-      return res.status(404).json({ message: 'Tour not found, booboo' });
+      return res.status(404).json({ message: 'Tour not found' });
     }
 
     res.status(200).json(updatedTour);
@@ -71,7 +71,7 @@ export const deleteTour = async (req, res) => {
     const tour = await Tour.findByIdAndDelete(req.params.id);
 
     if (!tour) {
-      return res.status(404).json({ message: 'Tour not found, booboo' });
+      return res.status(404).json({ message: 'Tour not found' });
     }
 
     res.status(200).json({ message: 'Tour successfully deleted' });

@@ -1,8 +1,8 @@
 import express from 'express';
 import {
-  createTour,
-  updateTour,
-  deleteTour,
+    createTour,
+    updateTour,
+    deleteTour,
 } from '../controllers/tourController.js'
 
 const router = express.Router();
