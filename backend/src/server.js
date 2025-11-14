@@ -1,11 +1,15 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-
 import connectDB from './config/db.js';
+
+//routes import
 import publicRoutes from './routes/tours.js'
 import adminRoutes from './routes/admin.js'
 import authRoutes from './routes/auth.js'
+
+//middlewares import
+import { protectAdmin } from './middleware/authMiddleware.js';
 
 // Load env vars
 dotenv.config();
@@ -26,8 +30,9 @@ app.get('/', (req, res) => {
 
 //routes
 app.use('/api/tours', publicRoutes); // route for public tour fetching
-app.use('/api/admin', adminRoutes);  // route for admin CRUD operation
 app.use('/api/auth', authRoutes);    // route for admin login
+app.use('/api/admin', protectAdmin, adminRoutes);  // route for admin CRUD operation
+
 
 app.listen(PORT, () => {
   console.log(`Server is listening on http://localhost:${PORT}`);

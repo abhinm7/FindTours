@@ -17,7 +17,10 @@ export const loginAdmin = (req, res) => {
       process.env.JWT_SECRET, // The secret key
       { expiresIn: '1d' } // Token expires in 1 day
     );
-
+    
+    if(token){
+      console.log("token created succesfully")
+    }
     res.json({
       message: "Login successful",
       token,
