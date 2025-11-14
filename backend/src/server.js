@@ -6,15 +6,15 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 5001; // 5001 so it won't clash with your React app
+const PORT = process.env.PORT;
 
 // Middleware
-app.use(cors()); // Allows your frontend to talk to this
-app.use(express.json()); // Allows server to accept JSON in body
+app.use(cors()); 
+app.use(express.json());
 
 // Basic test route
 app.get('/', (req, res) => {
-  res.send('Wow, booboo, the API is running! 🎉');
+  res.send('HELLO');
 });
 
 app.listen(PORT, () => {
