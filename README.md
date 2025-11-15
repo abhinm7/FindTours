@@ -12,10 +12,8 @@ FindTrips allows users to browse available tours and view details, while authent
 
 | Service | URL |
 |--------|------|
-| 🖥️ Frontend (Next.js) | https://YOUR-VERCEL-URL |
-| 🔌 Backend API (Node.js) | https://YOUR-BACKEND-DEPLOYED-URL |
-
-> Replace these with your actual deployed URLs.
+| 🖥️ Frontend (Next.js) | findtours.vercel.app |
+| 🔌 Backend API (Node.js) | https://find-tours.vercel.app |
 
 ---
 
@@ -242,7 +240,4 @@ Supports:
 
 > Make sure backend CORS allows your Vercel domain.
 
----
-A clean and fast end-to-end tours management system.
-Just tell me!
 ```
