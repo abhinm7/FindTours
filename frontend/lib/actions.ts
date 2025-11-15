@@ -2,7 +2,7 @@ import axios from "axios";
 import { Tour } from "./types";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
-
+console.log(BASE_URL)
 // Get all tours (client/server safe)
 export async function getTours(): Promise<Tour[]> {
   try {

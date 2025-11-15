@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import TourCard from '@/components/TourCard';
 import { getTours } from '@/lib/actions';
 

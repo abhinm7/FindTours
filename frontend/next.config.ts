@@ -1,7 +1,7 @@
 // next.config.js
 /** @type {import('next').NextConfig} */
 module.exports = {
-  turbo: false,
+  productionBrowserSourceMaps: false,
   images: {
     remotePatterns: [
       {
