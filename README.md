@@ -230,7 +230,7 @@ Protected pages automatically redirect if not logged in.
 * Automatic routing support
 * Environment variables setup
 
-### **Backend → Render / Railway / Fly.io**
+### **Backend → Vercel**
 
 Supports:
 
