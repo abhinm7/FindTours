@@ -13,23 +13,15 @@ import {
 import { Input } from "@/components/ui/input";
 import { Loader2 } from "lucide-react";
 import { Tour } from "@/lib/types";
+import { tourSchema, TourFormValues } from "@/lib/schema";
 
-const editTourSchema = z.object({
-  title: z.string().min(2),
-  destination: z.string().min(2),
-  price: z.number().min(1),
-  startDate: z.string(),
-  endDate: z.string(),
-  image: z.any().optional(), 
-});
-
-type EditTourFormValues = z.infer<typeof editTourSchema>;
+type EditTourFormValues = z.infer<typeof tourSchema>;
 
 export function EditTourForm({ tour }: { tour: Tour }) {
   const [isPending, startTransition] = useTransition();
 
   const form = useForm<EditTourFormValues>({
-    resolver: zodResolver(editTourSchema),
+    resolver: zodResolver(tourSchema),
     defaultValues: {
       title: tour.title,
       destination: tour.destination,

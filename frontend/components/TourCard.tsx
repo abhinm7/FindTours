@@ -1,71 +1,66 @@
-import Image from 'next/image';
-import { Card } from '@/components/ui/card';
-import { Tour } from '@/lib/types';
-import { CalendarDays } from 'lucide-react';
+import Image from "next/image";
+import Link from "next/link";
+import { Tour } from "@/lib/types";
+import { Calendar } from "lucide-react";
 
-type TourCardProps = {
-  tour: Tour;
-};
-
-export default function TourCard({ tour }: TourCardProps) {
-  const formattedPrice = new Intl.NumberFormat('en-IN', {
-    style: 'currency',
-    currency: 'INR',
-    minimumFractionDigits: 0,
-  }).format(tour.price);
-
-  const startDate = new Date(tour.startDate);
-  const endDate = new Date(tour.endDate);
-
-  const formattedStartDate = startDate.toLocaleDateString('en-IN', {
-    month: 'short',
-    day: 'numeric',
-  });
-
-  const dateRange = `${formattedStartDate} - ${endDate.toLocaleDateString(
-    'en-IN',
-    {
-      month: 'short',
-      day: 'numeric',
-      year: 'numeric',
-    }
-  )}`;
+export default function TourCard({ tour }: { tour: Tour }) {
+  const start = new Date(tour.startDate);
+  const end = new Date(tour.endDate);
+  const diffDays = Math.ceil((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24));
 
   return (
-    <Card
-      className="
-        overflow-hidden p-0 rounded w-full max-w-xs mx-auto
-        transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg
-      "
+    <Link
+      href={`/tour/${tour._id}`}
+      className="block rounded-lg shadow-sm border hover:shadow-md transition overflow-hidden bg-white h-full"
     >
-      <div className="relative w-full h-40">
-        {tour.image?.url ? (
-          <Image
-            src={tour.image.url}
-            alt={tour.title}
-            fill
-            className="object-cover"
-          />
-        ) : (
-          <div className="w-full h-full bg-gray-200 flex items-center justify-center">
-            <span className="text-gray-500">No Image</span>
+      {/* Image */}
+      <div className="relative w-full h-40 md:h-44">
+        <Image
+          src={tour.image.url}
+          alt={tour.title}
+          fill
+          className="object-cover"
+          sizes="(max-width: 768px) 100vw, 33vw"
+        />
+      </div>
+
+      {/* Content */}
+      <div className="p-4 flex flex-col gap-2 h-[210px] justify-between">
+
+        {/* Title */}
+        <h2 className="font-semibold text-[15px] leading-snug line-clamp-2 h-12">
+          {tour.title}
+        </h2>
+
+        {/* Destination */}
+        <p className="text-gray-600 text-sm">{tour.destination}</p>
+
+        {/* Date + Duration */}
+        <div className="flex items-center justify-between text-sm text-gray-500 mt-1">
+          <div className="flex items-center gap-1">
+            <Calendar className="w-4 h-4" />
+            <span>
+              {start.toLocaleDateString("en-GB", {
+                day: "numeric",
+                month: "short",
+              })}
+              {" - "}
+              {end.toLocaleDateString("en-GB", {
+                day: "numeric",
+                month: "short",
+              })}
+            </span>
           </div>
-        )}
-      </div>
 
-      <div className="p-3">
-        <h2 className="text-lg font-semibold mb-1">{tour.title}</h2>
-        <p className="text-xs text-muted-foreground mb-2">{tour.destination}</p>
-
-        <div className="flex items-center gap-2 text-xs text-muted-foreground">
-          <CalendarDays className="w-3.5 h-3.5" />
-          <span>{dateRange}</span>
+          {/* Duration Right Side */}
+          <span className="text-gray-500">• {diffDays} days</span>
         </div>
-      </div>
 
-      <div className="p-3 pt-0 flex justify-between items-center">
-        <span className="text-base font-semibold">{formattedPrice}</span>
+        {/* Price bottom */}
+        <p className="font-semibold text-black text-lg">
+          ₹{tour.price.toLocaleString("en-IN")}
+        </p>
       </div>
-    </Card>
+    </Link>
   );
 }
