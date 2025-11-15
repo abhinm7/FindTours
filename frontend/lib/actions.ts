@@ -6,8 +6,10 @@ const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
 // Get all tours (client/server safe)
 export async function getTours(): Promise<Tour[]> {
   try {
+    
     const res = await axios.get(`${BASE_URL}/api/tours`);
     return res.data.success ? res.data.data : [];
+
   } catch (err) {
     console.error("Get tours error:", err);
     return [];
