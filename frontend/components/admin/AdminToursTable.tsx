@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { Tour } from "@/lib/types";
 import { deleteTour } from "@/lib/actions";
 import { toast } from "sonner";
@@ -17,10 +18,13 @@ import {
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Pencil, Trash2 } from "lucide-react";
+import { useState } from "react";
 
 type Props = { tours: Tour[] };
 
 export function AdminToursTable({ tours }: Props) {
+  const [loadingId, setLoadingId] = useState<string | null>(null);
+
   const formatPrice = (p: number) =>
     new Intl.NumberFormat("en-IN", {
       style: "currency",
@@ -31,13 +35,16 @@ export function AdminToursTable({ tours }: Props) {
   async function handleDelete(id: string) {
     if (!confirm("Are you sure you want to delete this tour?")) return;
 
+    setLoadingId(id);
+
     const result = await deleteTour(id);
 
     if (result.success) {
       toast.success("Tour deleted!");
-      window.location.reload(); // Refresh page
+      window.location.reload();
     } else {
       toast.error("Failed to delete tour!");
+      setLoadingId(null);
     }
   }
 
@@ -46,6 +53,7 @@ export function AdminToursTable({ tours }: Props) {
       <Table>
         <TableHeader>
           <TableRow>
+            <TableHead>Image</TableHead>
             <TableHead>Title</TableHead>
             <TableHead>Destination</TableHead>
             <TableHead>Price</TableHead>
@@ -56,6 +64,19 @@ export function AdminToursTable({ tours }: Props) {
         <TableBody>
           {tours.map((t) => (
             <TableRow key={t._id}>
+              {/* ⭐ Small Image Preview */}
+              <TableCell>
+                <div className="w-12 h-12 relative rounded-md overflow-hidden border">
+                  <Image
+                    src={t.image.url}
+                    alt={t.title}
+                    fill
+                    sizes="50px"
+                    className="object-cover"
+                  />
+                </div>
+              </TableCell>
+
               <TableCell>{t.title}</TableCell>
               <TableCell>{t.destination}</TableCell>
               <TableCell>{formatPrice(t.price)}</TableCell>
@@ -73,9 +94,14 @@ export function AdminToursTable({ tours }: Props) {
                 <Button
                   variant="destructive"
                   size="icon"
+                  disabled={loadingId === t._id}
                   onClick={() => handleDelete(t._id)}
                 >
-                  <Trash2 className="w-4 h-4" />
+                  {loadingId === t._id ? (
+                    <div className="h-4 w-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  ) : (
+                    <Trash2 className="w-4 h-4" />
+                  )}
                 </Button>
 
               </TableCell>

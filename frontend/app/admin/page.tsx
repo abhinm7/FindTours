@@ -9,13 +9,13 @@ import { Tour } from "@/lib/types";
 export default function AdminPage() {
   const router = useRouter();
 
-  // Protect route
   useEffect(() => {
     const token = localStorage.getItem("admin_token");
     if (!token) router.push("/admin/login");
   }, []);
 
-  const [tours, setTours] = useState<Tour[]>([]);
+  // null means "loading"
+  const [tours, setTours] = useState<Tour[] | null>(null);
 
   useEffect(() => {
     async function load() {
@@ -24,6 +24,15 @@ export default function AdminPage() {
     }
     load();
   }, []);
+
+  // ⭐ Show loading spinner while fetching tours
+  if (tours === null) {
+    return (
+      <div className="flex justify-center items-center h-64">
+        <div className="h-8 w-8 border-4 border-gray-300 border-t-black rounded-full animate-spin"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="container mx-auto p-8">
