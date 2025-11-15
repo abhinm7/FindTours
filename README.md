@@ -1,250 +1,248 @@
-🌍 FindTrips — Tours Management App
 
-A Full-Stack Application with Next.js 16 + Node.js + MongoDB + Cloudinary. This project is a complete tours listing and admin dashboard system where an authenticated admin can create, read, update, and delete tours, and users can browse and view tour details.
 
-🚀 Live Links
+```md
+# 🌍 FindTrips — Tours Management App
 
-Service
+A Full-Stack Application built using **Next.js 16**, **Node.js**, **MongoDB**, and **Cloudinary**.  
+FindTrips allows users to browse available tours and view details, while authenticated admins can **create**, **edit**, and **delete** tours from the admin dashboard.
 
-URL
+---
 
-🖥️ Frontend (Next.js)
+## 🚀 Live Links
 
-https://YOUR-VERCEL-URL
+| Service | URL |
+|--------|------|
+| 🖥️ Frontend (Next.js) | https://YOUR-VERCEL-URL |
+| 🔌 Backend API (Node.js) | https://YOUR-BACKEND-DEPLOYED-URL |
 
-🔌 Backend API (Node.js)
+> Replace these with your actual deployed URLs.
 
-https://YOUR-BACKEND-DEPLOYED-URL
+---
 
-(Replace these with your deployed URLs.)
+## 📦 Tech Stack
 
-📦 Tech Stack
+### **Frontend (FindTrips Web App)**
+- Next.js 16 (App Router)
+- React 19
+- Tailwind CSS + ShadCN UI
+- React Hook Form + Zod (Form validation)
+- Axios (API calls)
+- Client-side admin auth (JWT stored in localStorage)
+- Cloudinary for optimized images
 
-Frontend (FindTrips Web App)
+### **Backend (FindTrips API Server)**
+- Node.js + Express
+- MongoDB Atlas (Mongoose ORM)
+- Multer (file upload handling)
+- Cloudinary (image hosting)
+- JWT-based authentication
+- dotenv + CORS
 
-Next.js 16 (App Router)
+---
 
-React 19
+## 📁 Project Structure
 
-Tailwind CSS
-
-ShadCN UI
-
-React Hook Form + Zod (for form validation)
-
-Axios (for data fetching)
-
-Cloudinary (for image display)
-
-JWT client-side auth (using localStorage)
-
-Backend (FindTrips API Server)
-
-Node.js
-
-Express
-
-MongoDB Atlas (Mongoose ORM)
-
-Cloudinary (for image uploads)
-
-Multer (for file handling)
-
-JSON Web Tokens (JWT) (for auth)
-
-CORS
-
-dotenv
-
-📁 Project Structure
+```
 
 findtrips/
 │
-├── backend/        # Node.js + Express API
-└── frontend/       # Next.js 16 web app
+├── backend/      # Node.js + Express API
+└── frontend/     # Next.js 16 Web App
 
+````
 
-🔧 Backend Setup (FindTrips API)
+---
 
-Prerequisites
+# 🔧 Backend Setup (FindTrips API)
 
-Node.js 18+
+### **Prerequisites**
+- Node.js 18+
+- MongoDB Atlas account (or local MongoDB)
+- Cloudinary account
 
-MongoDB Atlas account (or local MongoDB)
+---
 
-Cloudinary account
-
-1️⃣ Install Dependencies
-
+## 1️⃣ Install Dependencies
+```bash
 cd backend
 npm install
+````
 
+---
 
-2️⃣ Add Environment Variables
+## 2️⃣ Setup Environment Variables
 
-Create a .env file inside the /backend directory.
+Create a `.env` file inside `/backend`:
 
-Required values:
-
+```env
 PORT=4000
 MONGO_URI=your_mongodb_uri
+
 ADMIN_EMAIL=admin@example.com
 ADMIN_PASSWORD=yourpassword
+
 JWT_SECRET=your_jwt_secret_key
+
 CLOUDINARY_CLOUD_NAME=your_cloud_name
 CLOUDINARY_API_KEY=your_api_key
 CLOUDINARY_API_SECRET=your_api_secret
+```
 
+---
 
-3️⃣ Run the Backend Server
+## 3️⃣ Run the Backend
 
+```bash
 npm run dev
+```
 
+Your server should now run at:
 
-The server will run at http://localhost:4000 and confirm connection to MongoDB and Cloudinary.
+```
+http://localhost:4000
+```
 
-🔌 Backend API Routes
+---
 
-Public Routes
+# 🔌 Backend API Routes
 
-Method
+### **Public Routes**
 
-Endpoint
+| Method | Endpoint         | Description       |
+| ------ | ---------------- | ----------------- |
+| GET    | `/api/tours`     | Get all tours     |
+| GET    | `/api/tours/:id` | Get a single tour |
 
-Description
+---
 
-GET
+### **Admin Auth**
 
-/api/tours
+| Method | Endpoint          | Description               |
+| ------ | ----------------- | ------------------------- |
+| POST   | `/api/auth/login` | Admin login → returns JWT |
 
-Get all tours
+---
 
-GET
+### **Admin CRUD (Protected with JWT)**
 
-/api/tours/:id
+Requires header: `Authorization: Bearer <token>`
 
-Get tour by ID
+| Method | Endpoint               | Description                         |
+| ------ | ---------------------- | ----------------------------------- |
+| POST   | `/api/admin/tours`     | Create tour *(multipart/form-data)* |
+| PUT    | `/api/admin/tours/:id` | Update tour *(multipart/form-data)* |
+| DELETE | `/api/admin/tours/:id` | Delete tour                         |
 
-Admin Auth
+---
 
-Method
+# 🎨 Frontend Setup (FindTrips Web App)
 
-Endpoint
+## 1️⃣ Install Dependencies
 
-Description
-
-POST
-
-/api/auth/login
-
-Login using email + password → returns JWT
-
-Admin CRUD (Protected with JWT)
-
-Requires an Authorization: Bearer <token> header.
-
-Method
-
-Endpoint
-
-Description
-
-POST
-
-/api/admin/tours
-
-Create a new tour (multipart/form-data)
-
-PUT
-
-/api/admin/tours/:id
-
-Edit a tour (multipart/form-data)
-
-DELETE
-
-/api/admin/tours/:id
-
-Delete a tour
-
-🎨 Frontend Setup (FindTrips Web App)
-
-1️⃣ Install Dependencies
-
+```bash
 cd frontend
 npm install
+```
 
+---
 
-2️⃣ Add Environment Variable
+## 2️⃣ Add Environment Variables
 
-Create a .env.local file in the /frontend directory:
+Create `.env.local` inside `/frontend`:
 
+```env
 NEXT_PUBLIC_API_URL=https://YOUR-BACKEND-URL
+```
 
+Example:
 
-Example: NEXT_PUBLIC_API_URL=https://findtrips-backend.onrender.com
+```env
+NEXT_PUBLIC_API_URL=https://findtrips-backend.onrender.com
+```
 
-3️⃣ Run Development Server
+---
 
+## 3️⃣ Run Development Server
+
+```bash
 npm run dev
+```
 
+Frontend runs at:
 
-The frontend will run at http://localhost:3000.
+```
+http://localhost:3000
+```
 
-🔐 Admin Login (Frontend)
+---
 
-Go to http://localhost:3000/admin/login.
+# 🔐 Admin Login (Frontend)
 
-Use the credentials you set in the backend/.env file (ADMIN_EMAIL and ADMIN_PASSWORD).
+Navigate to:
 
-After login, a JWT is stored in localStorage, and the admin can:
+```
+/admin/login
+```
 
-✔ Create, Edit, and Delete Tours
+Use credentials from your backend `.env`:
 
-✔ Access the Admin Dashboard
+```
+ADMIN_EMAIL=
+ADMIN_PASSWORD=
+```
 
-Protected admin routes will automatically redirect to the login page if not authenticated.
+### After successful login:
 
-🖼 Features
+* JWT is stored in `localStorage`
+* Admin can:
+  ✔ Create Tours
+  ✔ Edit Tours
+  ✔ Delete Tours
+  ✔ Access Dashboard
 
-🎯 User Features
+Protected pages automatically redirect if not logged in.
 
-View all tours in a responsive grid.
+---
 
-View a single tour detail page.
+# 🖼 Features
 
-Mobile-friendly design.
+### 🎯 User Features
 
-Optimized images served from Cloudinary.
+* Browse all tours
+* View tour details
+* Responsive UI (mobile-friendly)
+* Optimized Cloudinary images
 
-🛠 Admin Features
+### 🛠 Admin Features
 
-Authentication: Secure admin login with JWT.
+* Secure Login (JWT)
+* Create/Edit/Delete tours
+* Upload tour images
+* Admin dashboard table with actions
+* Loading states & toast notifications
+* Zod-powered validation
 
-CRUD: Create, Update, and Delete tours.
+---
 
-Image Uploads: Direct upload to Cloudinary via the backend.
+# 🚀 Deployment
 
-Dashboard: A table view of all tours with edit/delete actions.
+### **Frontend → Vercel**
 
-UX: Loading states and toast notifications (via Sonner) for all actions.
+* Fast builds with Turbopack
+* Automatic routing support
+* Environment variables setup
 
-Validation: Type-safe forms with Zod validation.
+### **Backend → Render / Railway / Fly.io**
 
-🚀 Deployment
+Supports:
 
-Frontend (Vercel)
+* Auto-redeploy on Git push
+* Environment variables
+* Node.js hosting
 
-The frontend is designed for and deployed on Vercel, which handles the Next.js App Router build process automatically.
+> Make sure backend CORS allows your Vercel domain.
 
-Backend (Render, Railway, etc.)
-
-The backend API can be deployed on any service that supports Node.js, such as:
-
-Render
-
-Railway
-
-Fly.io
-
-Note: Ensure you configure CORS on your backend server to allow requests from your Vercel frontend domain.
+---
+A clean and fast end-to-end tours management system.
+Just tell me!
+```
