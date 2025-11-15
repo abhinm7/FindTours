@@ -12,24 +12,23 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Loader2 } from "lucide-react";
-
-const tourSchema = z.object({
-  title: z.string().min(2),
-  destination: z.string().min(2),
-  price: z.number().min(1),
-  startDate: z.string(),
-  endDate: z.string(),
-  image: z.any(),
-});
-
-type TourFormValues = z.infer<typeof tourSchema>;
+import { tourSchema, TourFormValues } from "@/lib/schema";
 
 export function CreateTourForm() {
   const [isPending, startTransition] = useTransition();
 
   const form = useForm<TourFormValues>({
     resolver: zodResolver(tourSchema),
+    defaultValues: {
+      title: "",
+      destination: "",
+      price: undefined,
+      startDate: "",
+      endDate: "",
+      image: undefined,
+    },
   });
+
 
   const { register } = form;
 
@@ -54,6 +53,7 @@ export function CreateTourForm() {
   return (
     <Form {...form}>
       <form className="space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
+
         {/* Title */}
         <FormField
           control={form.control}
@@ -94,9 +94,11 @@ export function CreateTourForm() {
               <FormControl>
                 <Input
                   type="number"
-                  {...field}
-                  value={field.value || ""}
-                  onChange={(e) => field.onChange(Number(e.target.value))}
+                  value={field.value ?? ""}
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    field.onChange(val === "" ? undefined : Number(val));
+                  }}
                 />
               </FormControl>
               <FormMessage />
@@ -138,10 +140,16 @@ export function CreateTourForm() {
         <FormItem>
           <FormLabel>Tour Image</FormLabel>
           <FormControl>
-            <Input type="file" accept="image/*" {...register("image")} />
+            <input
+              type="file"
+              accept="image/*"
+              {...register("image")}
+              className="border p-2 rounded w-full"
+            />
           </FormControl>
           <FormMessage />
         </FormItem>
+
 
         {/* Submit */}
         <Button disabled={isPending} className="w-full">
