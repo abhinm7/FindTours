@@ -10,8 +10,12 @@ import { verifyAdminFrontEnd } from "@/lib/auth";
 export default function AdminPage() {
   const router = useRouter();
 
+  // null means "loading"
+  const [tours, setTours] = useState<Tour[] | null>(null);
+
   useEffect(() => {
     async function init() {
+      // Verify token
       const check = await verifyAdminFrontEnd();
 
       if (!check.valid) {
@@ -19,24 +23,13 @@ export default function AdminPage() {
         return router.push("/admin/login");
       }
 
+      // Load tours
       const data = await getTours();
       setTours(data);
     }
 
     init();
-  }, []);
-
-
-  // null means "loading"
-  const [tours, setTours] = useState<Tour[] | null>(null);
-
-  useEffect(() => {
-    async function load() {
-      const data = await getTours();
-      setTours(data);
-    }
-    load();
-  }, []);
+  }, [router]);
 
   // Show loading spinner while fetching tours
   if (tours === null) {
