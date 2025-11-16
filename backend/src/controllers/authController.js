@@ -30,3 +30,41 @@ export const loginAdmin = (req, res) => {
     res.status(401).json({ message: 'Invalid email or password' });
   }
 };
+
+//verify token
+export const verifyToken = (req, res) => {
+
+  const authHeader = req.headers.authorization;
+
+  if (!authHeader) {
+    return res.status(400).json({
+      valid: false,
+      message: "missing",
+    });
+  }
+
+  const token = authHeader.split(" ")[1];
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+    return res.json({
+      valid: true,
+      message: "valid",
+      admin: decoded,
+    });
+
+  } catch (err) {
+    if (err.name === "TokenExpiredError") {
+      return res.status(401).json({
+        valid: false,
+        message: "expired",
+      });
+    }
+
+    return res.status(401).json({
+      valid: false,
+      message: "invalid",
+    });
+  }
+};

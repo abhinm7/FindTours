@@ -5,14 +5,27 @@ import { useRouter } from "next/navigation";
 import { getTours } from "@/lib/actions";
 import { AdminToursTable } from "@/components/admin/AdminToursTable";
 import { Tour } from "@/lib/types";
+import { verifyAdminFrontEnd } from "@/lib/auth";
 
 export default function AdminPage() {
   const router = useRouter();
 
   useEffect(() => {
-    const token = localStorage.getItem("admin_token");
-    if (!token) router.push("/admin/login");
+    async function init() {
+      const check = await verifyAdminFrontEnd();
+
+      if (!check.valid) {
+        localStorage.removeItem("admin_token");
+        return router.push("/admin/login");
+      }
+
+      const data = await getTours();
+      setTours(data);
+    }
+
+    init();
   }, []);
+
 
   // null means "loading"
   const [tours, setTours] = useState<Tour[] | null>(null);
@@ -25,7 +38,7 @@ export default function AdminPage() {
     load();
   }, []);
 
-  // ⭐ Show loading spinner while fetching tours
+  // Show loading spinner while fetching tours
   if (tours === null) {
     return (
       <div className="flex justify-center items-center h-64">
